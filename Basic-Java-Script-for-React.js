@@ -1,4 +1,5 @@
 // ts-worksheet
+
 const prompt = require ("prompt-sync")({sigint: true})
 const data = [
   {
@@ -145,7 +146,7 @@ function getBooks() {
 function getBook(id) {
   return data.find((d) => d.id === id);
 }
-let bookId=prompt("Enter book id: ");
+let bookId=prompt("Enter book id");
 bookId=parseInt(bookId);
 //Destructing
 const book = getBook(bookId);
@@ -202,9 +203,32 @@ const updatedBook = {
 };
 console.log(updatedBook);
 
+//ARROW FUNCTION 
+const getyear=(str)=>str.split("-")[0];
+
+//Arrow function if its multiple lines
+const PublishingMonth=(fullDate)=>{
+ const month= fullDate.split('-')[1];
+ return month;
+}
+// short-Circuiting && || ?? operators
+console.log(true && "In && operater if the first one is true, second one will be executed." );
+console.log(false && "In && operater if the first one is false, second one will not be executed first one will be returned.");
+console.log(true || "In || operater if the first one is true, second one will not be executed first one will be returned.");
+console.log(false || "In || operater if the first one is false, second one will be executed.");
+//example of short-circuiting || operater
+//Optional Chaining (?): This is used to safely access deeply nested properties. If book.reviews.librarything is undefined, it won't attempt to access reviewsCount, thus avoiding the error.
+console.log("reviews count: ",book.reviews.librarything?.reviewsCount);
+console.log("reviews count: ",book.reviews.librarything?.reviewsCount || "No Data");//if the reviewsCount is zero it will still say "No Data";
+//solution
+//Nullish Coalescing Operator (??): This ensures that if reviewsCount is null or undefined, it will default to "No Data".
+console.log("reviews count: ",book.reviews.librarything?.reviewsCount ?? "No Data");//if the reviewsCount is zero it will return zero instead of "No Data" and if it is not zero it will return the reviewsCount;
+const reviewsnumbers= book.reviews.librarything?.reviewsCount ?? " no data about "
+
 //string literals
-const summary=`${title} is a Book written by ${author} and it is a ${PrimaryGenre} book.It was released on ${publicationDate.split("-")[0]} and it has ${pages} pages.${title} is having${hasMovieAdaptation==true? ``:` no`} movie published.`;
+const summary=`${title} is a Book written by ${author} and it is a ${PrimaryGenre} book.It was released on ${getyear(publicationDate)} in month ${PublishingMonth(publicationDate)} and it has ${pages} pages having ${reviewsnumbers} reviews.${title} is having${hasMovieAdaptation==true? ``:` no`} movie published.`;
 console.log(summary);
+
 
 
 
